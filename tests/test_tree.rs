@@ -21,7 +21,9 @@ fn validate<T: Ord>(node: &TreeNode<T>) -> bool {
             TreeNode::Node(_, left, right) => {
                 let x = property2(left)?;
                 let y = property2(right)?;
-                Some((x - y).abs()).filter(|x| x <= &1).map(|_| 1 + x.max(y))
+                Some((x - y).abs())
+                    .filter(|x| x <= &1)
+                    .map(|_| 1 + x.max(y))
             }
         }
     }

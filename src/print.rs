@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use crate::tree::TreeNode;
+use std::fmt::{Display, Formatter};
 
 fn intersperse<T: Clone>(v: &Vec<T>, sep: T, count: usize) -> Vec<T> {
     if v.is_empty() {
@@ -73,14 +73,20 @@ impl<T: Ord + Clone + Display> TreeNode<T> {
             inter_padding_count = inter_padding_count * 2 + 1;
         }
 
-        with_padding.into_iter().rev().map(|row| {
-            row.into_iter().map(|x| {
-                match x {
-                    Some(v) => format!("{: ^width$}", v, width = width),
-                    None => format!("{: ^width$}", "", width = width),
-                }
-            }).collect::<Vec<_>>().join("")
-        }).collect::<Vec<_>>().join("\n")
+        with_padding
+            .into_iter()
+            .rev()
+            .map(|row| {
+                row.into_iter()
+                    .map(|x| match x {
+                        Some(v) => format!("{: ^width$}", v, width = width),
+                        None => format!("{: ^width$}", "", width = width),
+                    })
+                    .collect::<Vec<_>>()
+                    .join("")
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
     }
 }
 
