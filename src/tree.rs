@@ -1,8 +1,9 @@
 #[allow(unused_imports)]
 use std::{cmp::Ord, mem};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub enum TreeNode<T: Ord> {
+    #[default]
     Leaf,
     Node(T, Box<TreeNode<T>>, Box<TreeNode<T>>),
 }
@@ -22,21 +23,15 @@ impl<T: Ord> TreeNode<T> {
             match tree {
                 TreeNode::Leaf => true,
                 TreeNode::Node(value, left, right) => {
-                    match min {
-                        Some(min) => {
-                            if value <= min {
-                                return false;
-                            }
+                    if let Some(min) = min {
+                        if value <= min {
+                            return false;
                         }
-                        _ => {}
                     }
-                    match max {
-                        Some(max) => {
-                            if value >= max {
-                                return false;
-                            }
+                    if let Some(max) = max {
+                        if value >= max {
+                            return false;
                         }
-                        _ => {}
                     }
                     is_bst_helper(left, min, Some(value)) && is_bst_helper(right, Some(value), max)
                 }
@@ -179,11 +174,6 @@ impl<T: Ord> TreeNode<T> {
 }
 
 // Implement `Default` for `TreeNode<T>`
-impl<T: Ord> Default for TreeNode<T> {
-    fn default() -> Self {
-        TreeNode::Leaf
-    }
-}
 
 // Implement `PartialEq` for `TreeNode<T>`
 impl<T: Ord + PartialEq> PartialEq for TreeNode<T> {

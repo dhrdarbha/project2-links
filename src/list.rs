@@ -4,8 +4,9 @@ use std::{
     mem,
 };
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub enum ListNode<T> {
+    #[default]
     Nil,
     Cons(T, Box<ListNode<T>>),
 }
@@ -83,12 +84,6 @@ impl<T> ListNode<T> {
 }
 
 /* ---------- Trait Implementations ---------- */
-
-impl<T> Default for ListNode<T> {
-    fn default() -> Self {
-        ListNode::Nil
-    }
-}
 
 impl<T: PartialEq> PartialEq for ListNode<T> {
     fn eq(&self, other: &Self) -> bool {
